@@ -1,3 +1,4 @@
+from textnode import TextType
 
 class HTMLNode:
     def __init__(self, tag=None, value=None, children=None, props=None):
@@ -14,8 +15,7 @@ class HTMLNode:
             tag = self.tag
             value = self.value
 
-            if self.props == None:
-                return f'<{tag}>{value}</{tag}>'
+            if self.props == None: return f'<{tag}>{value}</{tag}>'
 
             return f'<{tag}{self.props_to_html()}>{value}</{tag}>'
         else:
@@ -68,3 +68,10 @@ class ParentNode(HTMLNode):
             output += child.to_html()
         return f'<{self.tag}>{output}</{self.tag}>'
 
+
+def text_node_to_html_node(text_node):
+    if text_node.text_type != "TextType.BOLD":
+        raise Exception("Selected text type not supported at this time")
+    elif text_node.text_type == TextType.BOLD:
+        return LeafNode("b", text_node.text)
+    

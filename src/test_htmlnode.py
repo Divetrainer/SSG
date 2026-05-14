@@ -1,6 +1,6 @@
 import unittest
-
-from htmlnode import HTMLNode, LeafNode, ParentNode
+from textnode import TextNode, TextType
+from htmlnode import HTMLNode, LeafNode, ParentNode, text_node_to_html_node
 
 class TestHTMLNode(unittest.TestCase):
     def test_propValueNotNone(self):
@@ -64,7 +64,12 @@ class TestHTMLNode(unittest.TestCase):
             parent_node.to_html(),
         "<div><span><b>grandchild</b></span></div>",
         )
-
+    
+    def test_text_bold(self):
+        node = TextNode("This is a bold node", TextType.BOLD)
+        html_node = text_node_to_html_node(node)
+        self.assertEqual(html_node.tag, "b")
+        self.assertEqual(html_node.value, "This is a bold node")
 
 if __name__ == "__main__":
     unittest.main()
